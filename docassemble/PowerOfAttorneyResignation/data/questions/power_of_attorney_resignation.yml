@@ -1,0 +1,412 @@
+metadata:
+  title: Power of attorney agent resignation
+  short title: POA resignation
+  comment: This program helps you complete the forms to resign as an agent for power of attorney.
+  authors:
+    - Vivian McNaughton
+    - Matt Newsted
+---
+include:
+  - docassemble.AssemblyLine:assembly_line.yml
+  - docassemble.ALToolbox:phone-number-validation.yml
+  - docassemble.ILAO:ilao-interview-framework.yml
+  - docassemble.ILAO:shared-basic-questions.yml
+---
+objects:
+  - user: ALIndividual
+  - principal: ALIndividual
+  - court_list: ALCourtLoader.using(file_name='docassemble.ILAO:data/sources/il_courts.xlsx')
+---
+sections:
+  - review_answers: Review your answers
+---
+# Road map
+sections:
+  - section_intro: Start
+  #- section_qualify: Do you qualify?
+  - section_power: Power of Attorney
+  - section_dates: Start and end dates
+  - section_user: About you
+  - section_download: Download
+---
+# interview order block
+mandatory: True
+code: |
+  ilao_easy_form_title = "Power of attorney resignation"
+  ilao_easy_form_url = "https://www.illinoislegalaid.org/legal-information/power-attorney-agent-resign-letter"
+  sees_nav_bar
+  nav.set_section('section_intro')
+  set_progress(5)
+  how_to_use
+  accept_terms
+  get_legal_help
+  set_progress(25)
+  nav.set_section('section_power')
+  if in_illinois == False:
+    out_of_state
+  principal.name.first
+  poa_type
+  set_progress(50)
+  nav.set_section('section_dates')
+  if poa_type == "Health care":
+    health_start_date
+    health_end_date
+  if poa_type == "Property":
+    property_start_date
+    property_end_date
+  if poa_type == "Both":
+    health_start_date
+    health_end_date
+    property_start_date
+    property_end_date
+  nav.set_section('section_user')
+  set_progress(75)
+  user.name.first
+  user.address.address
+  nav.set_section('section_download')
+  set_progress(100)
+  get_docs_screen 
+---
+id: welcome
+question: |
+  Power of attorney resignation
+subquestion: |
+  Welcome to Illinois Legal Aid Online's **Power of attorney resignation** Easy Form.
+
+  This program helps you complete the forms to resign as an agent for power of attorney.
+  
+  Learn about [**resigning as a power of attorney**](https://www.illinoislegalaid.org/legal-information/ending-power-attorney-0).
+field: sees_nav_bar
+---
+id: instructions
+continue button field: how_to_use
+question: |
+  Instructions
+subquestion: |
+  You can use this program if you want to resign as an agent for a Power of Attorney.
+  
+  To use this program you will need to know:
+
+  * The date the Power of Attorney was created, and
+  * The date you plan to resign as an agent for the Power of Attorney.
+
+  After you download your letter, you will need to sign it in the presence of a notary. After the letter is notarized, you can mail it.
+    
+  Set aside 5 to 10 minutes to finish this program. You can log in and save your work to return to later. 
+  
+  ${ collapse_template(help_example) }  
+
+  Click on **{green words}** to learn what they mean. Some questions have a question mark in a circle ${ fa_icon("question-circle", color_css="#0DCAF0" ) } that also gives help.
+---
+template: help_example
+
+subject: |
+
+  **You can expand sections like this to show more information.**
+
+content: |  
+
+  This is an example of help. Click again to hide.
+---
+---
+id: accept terms
+question: |
+  Terms of use
+subquestion: |
+  This program does not provide legal advice. It does not take the place of advice from a lawyer.
+
+  Using this program does not create an attorney-client relationship between you and Illinois Legal Aid Online or its employees.
+
+  ${ collapse_template(get_legal_help) }  
+
+fields:
+  - To continue, you must accept the [**terms of use**](s://www.illinoislegalaid.org/about/terms-of-use).: accept
+    datatype: checkboxes
+    none of the above: False
+    minlength: 1
+    choices:
+      - I accept the terms of use.
+    validation messages:
+      minlength: |
+        You cannot continue unless you agree to the terms of use.
+continue button field: accept_terms
+---
+template: get_legal_help
+subject: |
+  **What if I need legal advice?**
+content: |  
+  If you have questions or concerns about your legal problem and want legal advice you should talk to a lawyer.
+ 
+  Use [**Get Legal Help**](https://www.illinoislegalaid.org/get-legal-help) to find free or low-cost legal services in your area.
+---
+id: in illinois
+question: |
+  Are you an agent with power of attorney for a person living in Illinois?
+fields:
+  - no label: in_illinois
+    datatype: yesnoradio
+---
+id: out of state
+event: out_of_state
+question: |
+  Sorry
+subquestion: |
+  This interview is only for agents who have power of attorney for Illinois residents.
+  
+  You can use [**this website**](https://www.lsc.gov/about-lsc/what-legal-aid/get-legal-help) to find a legal aid organization near you.
+buttons:
+  - Exit: exit
+  - Restart: restart
+---
+id: principal name
+question: |
+  What is the name of the principal?
+subquestion: |
+  The principal is the person for whom you are an agent for power of attorney.
+fields:
+  - First: principal.name.first
+  - Middle: principal.name.middle
+    required: False
+  - Last: principal.name.last
+---
+id: poa type
+question: |
+   Are you an Agent for Power of Attorney for Health Care, Property, or both?
+field: poa_type
+choices:
+  - Health care
+  - Property
+  - Both
+---
+id: health start date
+question: |
+  When was the Power of Attorney for Health Care created?
+fields:
+  - Health care creation date: health_start_date
+    datatype: date
+    max: ${ today() }
+---
+id: property start date
+question: |
+  When was the Power of Attorney for Property created?
+fields:
+  - Property creation date: property_start_date
+    datatype: date
+    max: ${ today() }
+---
+id: health resign date
+question: |
+  When will you resign as Agent for Power of Attorney for Health Care?
+fields:
+  - Health care resignation date: health_end_date
+    datatype: date
+    min: ${ today() }
+---
+id: property resign date
+question: |
+  When will you resign as Agent for Power of Attorney for Health Care?
+fields:
+  - Property resignation date: property_end_date
+    datatype: date
+    min: ${ today() }
+---
+id: your name
+question: |
+  What is your name?
+fields:
+  - First: user.name.first
+  - Middle: user.name.middle
+    required: False
+  - Last: user.name.last
+---
+id: your address
+question: |
+  What is your address?
+fields:
+  - Street address: user.address.address
+    address autocomplete: True
+  - Address line 2: user.address.unit
+    required: False
+  - City: user.address.city
+  - State: user.address.state
+    code: |
+      states_list() 
+  - ZIP code: user.address.zip
+---
+id: get docs screen
+event: get_docs_screen
+question: |
+  Download
+subquestion: |
+  Your forms are ready. View and download your forms below. Click **Make changes** to fix any mistakes.
+  
+  Read the instructions to learn what to do next.
+
+  Thank you for using ILAO Easy Forms!
+  
+  ${ action_button_html(url_action('review_answers'), label=':edit: Make changes', color='success', size="md") }
+
+  ${ al_user_bundle.download_list_html() }
+ 
+  &nbsp;
+
+  ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
+  
+  **Note:** This program does not send your form. You will need to do this yourself.
+
+  Thank you for using ILAO Easy Forms!
+under: |
+  % if not user_logged_in():
+  [${fa_icon("sign-in-alt", color="#0079d0", size="sm")} **Sign-in**](${url_of('login', next=interview_url())}) or [**create**](${url_of('register', next=interview_url())}) an ILAO Easy Form account to save your progress (optional).
+  % endif
+
+ 
+  ${ action_button_html(interview_url(i="docassemble.ILAO:feedback.yml", easy_form_interview=ilao_easy_form_url, easy_form_title=ilao_easy_form_title, easy_form_page=user_info().question_id, easy_form_variable=user_info().variable, local=False,reset=1), label=':comment: Was this program helpful?', color="#181c36", size="md", new_window=True) }
+---
+generic object: ALDocumentBundle
+template: x.send_email_template
+subject: |
+  Power of attorney resignation
+content: |
+  Your forms are attached.
+  
+  Thanks for using ILAO Easy Forms!
+  
+  [Illinois Legal Aid Online](https://www.illinoislegalaid.org)
+---
+attachment:
+  name: Power of attorney resignation
+  variable name: poa_resign[i]
+  filename: poa_resign
+  docx template file: poa_resignation_docassemble.docx
+  skip undefined: True
+---
+attachment:
+  name: Instructions for power of attorney resignation
+  variable name: instructions[i]
+  filename: instructions_for_poa_resignation
+  docx template file: poa_resignation_instructions.docx
+  skip undefined: True
+---
+objects:
+  - poa_resign: ALDocument.using(title="Power of attorney resignation", filename="poa_resign", enabled=True, has_addendum=False)
+  - instructions: ALDocument.using(title="Instructions", filename="instructions", enabled=True, has_addendum=False)
+---
+objects:
+  - al_user_bundle: ALDocumentBundle.using(elements=[instructions, poa_resign], filename="power_of_attorney_resignation.pdf", title="Download all forms")
+  - al_court_bundle: ALDocumentBundle.using(elements=[instructions, poa_resign], filename="power_of_attorney_resignation.pdf", title="Download all forms")
+---
+id: review screen
+event: review_answers
+question: |
+  Review screen
+subquestion: |
+  Edit your answers below.
+review: 
+  - Edit: principal.name.first
+    button: |
+      **The principal's name:**
+      ${principal.name.full(middle="full")}
+  - Edit: poa_type
+    button: |
+      % if poa_type == "Health care":
+        **You are an Agent for Power of Attorney for:** Health care
+      % endif
+      % if poa_type == "Property":
+        **You are an Agent for Power of Attorney for:** Property
+      % endif
+      % if poa_type == "Both":
+        **You are an Agent for Power of Attorney for:** both Health care and Property
+      % endif
+  - Edit: health_start_date
+    button: |
+      **The date the Power of Attorney for Health Care was created:**
+      ${health_start_date}
+    show if: poa_type == "Health care" or poa_type == "Both"
+  - Edit: property_start_date
+    button: |
+      **The date the Power of Attorney for Property was created:**
+      ${property_start_date}
+    show if: poa_type == "Property" or poa_type == "Both"
+  - Edit: health_end_date
+    button: |
+      **The date you will resign as Power of Attorney for Health Care:**
+      ${health_end_date}
+    show if: poa_type == "Health care" or poa_type == "Both"
+  - Edit: property_end_date
+    button: |
+      **The date you will resign as Power of Attorney for Property:**
+      ${property_end_date}
+    show if: poa_type == "Property" or poa_type == "Both"
+  - Edit: user.name.first
+    button: |
+      **Your name:**
+      ${user.name.full(middle="full")}
+  - Edit: user.address.address
+    button: |
+      **Your address:**
+      ${user.address.on_one_line(bare=True)}
+---
+event: section_power
+question: |
+  About the Power of Attorney
+subquestion: |
+  Edit your answers below.
+review:
+  - Edit: principal.name.first
+    button: |
+      **The principal's name:**
+      ${principal.name.full(middle="full")}
+  - Edit: poa_type
+    button: |
+      % if poa_type == "Health care":
+        **You are an Agent for Power of Attorney for:** Health care
+      % endif
+      % if poa_type == "Property":
+        **You are an Agent for Power of Attorney for:** Property
+      % endif
+      % if poa_type == "Both":
+        **You are an Agent for Power of Attorney for:** both Health care and Property
+      % endif
+---
+event: section_dates
+question: |
+  About the start and end dates
+subquestion: |
+  Edit your answers below.
+review:
+  - Edit: health_start_date
+    button: |
+      **The date the Power of Attorney for Health Care was created:**
+      ${health_start_date}
+    show if: poa_type == "Health care" or poa_type == "Both"
+  - Edit: property_start_date
+    button: |
+      **The date the Power of Attorney for Property was created:**
+      ${property_start_date}
+    show if: poa_type == "Property" or poa_type == "Both"
+  - Edit: health_end_date
+    button: |
+      **The date you will resign as Power of Attorney for Health Care:**
+      ${health_end_date}
+    show if: poa_type == "Health care" or poa_type == "Both"
+  - Edit: property_end_date
+    button: |
+      **The date you will resign as Power of Attorney for Property:**
+      ${property_end_date}
+    show if: poa_type == "Property" or poa_type == "Both"
+---
+event: section_user
+question: |
+  About you
+subquestion: |
+  Edit your answers below.
+review:
+  - Edit: user.name.first
+    button: |
+      **Your name:**
+      ${user.name.full(middle="full")}
+  - Edit: user.address.address
+    button: |
+      **Your address:**
+      ${user.address.on_one_line(bare=True)}
