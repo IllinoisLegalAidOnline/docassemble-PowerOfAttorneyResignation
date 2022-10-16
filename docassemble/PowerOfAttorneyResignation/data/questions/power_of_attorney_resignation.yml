@@ -17,6 +17,12 @@ objects:
   - principal: ALIndividual
   - court_list: ALCourtLoader.using(file_name='docassemble.ILAO:data/sources/il_courts.xlsx')
 ---
+code: |
+  ilao_easy_form_title = "Power of attorney resignation"
+  ilao_easy_form_url = "https://www.illinoislegalaid.org/legal-information/power-attorney-agent-resign-letter"
+  github_user = 'IllinoisLegalAidOnline'
+  github_repo_name = 'docassemble-PowerOfAttorneyResignation'
+---
 sections:
   - review_answers: Review your answers
 ---
@@ -32,8 +38,6 @@ sections:
 # interview order block
 mandatory: True
 code: |
-  ilao_easy_form_title = "Power of attorney resignation"
-  ilao_easy_form_url = "https://www.illinoislegalaid.org/legal-information/power-attorney-agent-resign-letter"
   sees_nav_bar
   nav.set_section('section_intro')
   set_progress(5)
@@ -120,7 +124,7 @@ subquestion: |
   ${ collapse_template(get_legal_help) }  
 
 fields:
-  - To continue, you must accept the [**terms of use**](s://www.illinoislegalaid.org/about/terms-of-use).: accept
+  - To continue, you must accept the [**terms of use**](https://www.illinoislegalaid.org/about/terms-of-use).: accept
     datatype: checkboxes
     none of the above: False
     minlength: 1
@@ -153,7 +157,7 @@ question: |
 subquestion: |
   This interview is only for agents who have power of attorney for Illinois residents.
   
-  You can use [**this website**](https://www.lsc.gov/about-lsc/what-legal-aid/get-legal-help) to find a legal aid organization near you.
+  You can use the [**Legal Services Corporation website**](https://www.lsc.gov/about-lsc/what-legal-aid/get-legal-help) to find a legal aid organization near you.
 buttons:
   - Exit: exit
   - Restart: restart
