@@ -79,7 +79,7 @@ subquestion: |
 
   This program helps you complete the forms to resign as an agent for power of attorney.
   
-  Learn about [**resigning as a power of attorney**](https://www.illinoislegalaid.org/legal-information/ending-power-attorney-0).
+  To learn more, read ILAO’s article about [**resigning as a power of attorney**](https://www.illinoislegalaid.org/legal-information/ending-power-attorney-0).
 field: sees_nav_bar
 ---
 id: instructions
@@ -87,12 +87,12 @@ continue button field: how_to_use
 question: |
   Instructions
 subquestion: |
-  You can use this program if you want to resign as an agent for a Power of Attorney.
+  You can use this program if you want to resign as an agent for a power of attorney.
   
   To use this program you will need to know:
 
-  * The date the Power of Attorney was created, and
-  * The date you plan to resign as an agent for the Power of Attorney.
+  * The date the power of attorney was created, and
+  * The date you plan to resign as an agent for the power of attorney.
 
   After you download your letter, you will need to sign it in the presence of a notary. After the letter is notarized, you can mail it.
     
@@ -175,7 +175,7 @@ fields:
 ---
 id: poa type
 question: |
-   Are you an Agent for Power of Attorney for Health Care, Property, or both?
+   Are you an agent with power of attorney for health care, property, or both?
 field: poa_type
 choices:
   - Health care
@@ -200,7 +200,7 @@ fields:
 ---
 id: health resign date
 question: |
-  When will you resign as Agent for Power of Attorney for Health Care?
+  When will you resign as the agent with power of attorney for health care?
 fields:
   - Health care resignation date: health_end_date
     datatype: date
@@ -208,7 +208,7 @@ fields:
 ---
 id: property resign date
 question: |
-  When will you resign as Agent for Power of Attorney for Health Care?
+  When will you resign as agent for power of attorney for property?
 fields:
   - Property resignation date: property_end_date
     datatype: date
@@ -293,7 +293,7 @@ attachment:
   skip undefined: True
 ---
 objects:
-  - poa_resign: ALDocument.using(title="Power of attorney resignation", filename="poa_resign", enabled=True, has_addendum=False)
+  - poa_resign: ALDocument.using(title="Power of Attorney Resignation", filename="poa_resign", enabled=True, has_addendum=False)
   - instructions: ALDocument.using(title="Instructions", filename="instructions", enabled=True, has_addendum=False)
 ---
 objects:
@@ -314,13 +314,13 @@ review:
   - Edit: poa_type
     button: |
       % if poa_type == "Health care":
-        **You are an Agent for Power of Attorney for:** Health care
+        **You are an agent with power of attorney for:** Health care
       % endif
       % if poa_type == "Property":
-        **You are an Agent for Power of Attorney for:** Property
+        **You are an agent with power of attorney for:** Property
       % endif
       % if poa_type == "Both":
-        **You are an Agent for Power of Attorney for:** both Health care and Property
+        **You are an agent for power of attorney for:** Both health care and property
       % endif
   - Edit: health_start_date
     button: |
@@ -334,12 +334,12 @@ review:
     show if: poa_type == "Property" or poa_type == "Both"
   - Edit: health_end_date
     button: |
-      **The date you will resign as Power of Attorney for Health Care:**
+      **The date you will resign as agent with power of attorney for health care:**
       ${health_end_date}
     show if: poa_type == "Health care" or poa_type == "Both"
   - Edit: property_end_date
     button: |
-      **The date you will resign as Power of Attorney for Property:**
+      **The date you will resign as agent with power of attorney for property:**
       ${property_end_date}
     show if: poa_type == "Property" or poa_type == "Both"
   - Edit: user.name.first
@@ -364,13 +364,13 @@ review:
   - Edit: poa_type
     button: |
       % if poa_type == "Health care":
-        **You are an Agent for Power of Attorney for:** Health care
+        **You are an agent with power of attorney for:** Health care
       % endif
       % if poa_type == "Property":
-        **You are an Agent for Power of Attorney for:** Property
+        **You are an agent with power of attorney for:** Property
       % endif
       % if poa_type == "Both":
-        **You are an Agent for Power of Attorney for:** both Health care and Property
+        **You are an agent with power of attorney for:** Both health care and property
       % endif
 ---
 event: section_dates
@@ -391,12 +391,12 @@ review:
     show if: poa_type == "Property" or poa_type == "Both"
   - Edit: health_end_date
     button: |
-      **The date you will resign as Power of Attorney for Health Care:**
+      **The date you will resign as agent with power of attorney for health care:**
       ${health_end_date}
     show if: poa_type == "Health care" or poa_type == "Both"
   - Edit: property_end_date
     button: |
-      **The date you will resign as Power of Attorney for Property:**
+      **The date you will resign as agent with power of attorney for property:**
       ${property_end_date}
     show if: poa_type == "Property" or poa_type == "Both"
 ---
