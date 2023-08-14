@@ -155,7 +155,7 @@ id: health start date
 question: |
   When was the Power of Attorney for Health Care created?
 fields:
-  - Health care creation date: health_start_date
+  - Power of Attorney for Health Care creation date: health_start_date
     datatype: date
     max: ${ today() }
 ---
@@ -163,7 +163,7 @@ id: property start date
 question: |
   When was the Power of Attorney for Property created?
 fields:
-  - Property creation date: property_start_date
+  - Power of Attorney for Property creation date: property_start_date
     datatype: date
     max: ${ today() }
 ---
@@ -171,7 +171,7 @@ id: health resign date
 question: |
   When will you resign as the agent with power of attorney for health care?
 fields:
-  - Health care resignation date: health_end_date
+  - Power of Attorney for Health care resignation date: health_end_date
     datatype: date
     min: ${ today() }
 ---
@@ -179,7 +179,7 @@ id: property resign date
 question: |
   When will you resign as agent for power of attorney for property?
 fields:
-  - Property resignation date: property_end_date
+  - Power of Attorney for Property resignation date: property_end_date
     datatype: date
     min: ${ today() }
 ---
@@ -266,7 +266,7 @@ objects:
   - instructions: ALDocument.using(title="Instructions", filename="instructions", enabled=True, has_addendum=False)
 ---
 objects:
-  - al_user_bundle: ALDocumentBundle.using(elements=[instructions, poa_resign], filename="power_of_attorney_resignation.pdf", title="Download all forms")
+  - al_user_bundle: ALDocumentBundle.using(elements=[instructions, poa_resign], filename="power_of_attorney_resignation.pdf", title="All forms")
   - al_court_bundle: ALDocumentBundle.using(elements=[instructions, poa_resign], filename="power_of_attorney_resignation.pdf", title="Download all forms")
 ---
 id: review screen
