@@ -267,7 +267,7 @@ objects:
 ---
 objects:
   - al_user_bundle: ALDocumentBundle.using(elements=[instructions, poa_resign], filename="power_of_attorney_resignation.pdf", title="All forms")
-  - al_court_bundle: ALDocumentBundle.using(elements=[instructions, poa_resign], filename="power_of_attorney_resignation.pdf", title="Download all forms")
+  - al_court_bundle: ALDocumentBundle.using(elements=[instructions, poa_resign], filename="power_of_attorney_resignation.pdf", title="All forms")
 ---
 id: review screen
 event: review_answers
