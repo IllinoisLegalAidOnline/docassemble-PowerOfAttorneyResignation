@@ -94,7 +94,7 @@ subquestion: |
   * The date the power of attorney was created, and
   * The date you plan to resign as an agent for the power of attorney.
 
-  After you download your letter, you will need to sign it in the presence of a notary. After the letter is notarized, you can mail it to your **{principal}** and anyone else who should know that you resigned.
+  After you download your letter, you will need to sign it with a notary public. After the letter is notarized, you can mail it to your **{principal}** and anyone else who should know that you resigned.
     
   Set aside 5 to 10 minutes to finish this program. You can log in and save your work to return to later. 
   
@@ -214,11 +214,9 @@ event: get_docs_screen
 question: |
   Download
 subquestion: |
-  Your forms are ready. View and download your forms below. You can print your forms from the View screen or after downloading them. Click **Make changes** to fix any mistakes.
+  Your forms are ready. View and download your forms below. You can print your forms after viewing or downloading them. Click **Make changes** to fix any mistakes.
   
-  Read the instructions to learn what to do next. Do not sign your forms before they are notarized.
-
-  Thank you for using ILAO Easy Forms!
+  Read the instructions to learn what to do next. Do not sign your forms until you are with a notary public.
   
   ${ action_button_html(url_action('review_answers'), label=':edit: Make changes', color='success', size="md") }
 
@@ -227,8 +225,6 @@ subquestion: |
   &nbsp;
 
   ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
-  
-  **Note:** This program does not e-file your form. You will need to do this yourself.
 
   Thank you for using ILAO Easy Forms!
 under: |
