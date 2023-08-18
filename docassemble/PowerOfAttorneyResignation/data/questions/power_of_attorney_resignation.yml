@@ -94,13 +94,16 @@ subquestion: |
   * The date the power of attorney was created, and
   * The date you plan to resign as an agent for the power of attorney.
 
-  After you download your letter, you will need to sign it in the presence of a notary. After the letter is notarized, you can mail it to your principal and anyone else who should know that you resigned.
+  After you download your letter, you will need to sign it in the presence of a notary. After the letter is notarized, you can mail it to your **{principal}** and anyone else who should know that you resigned.
     
   Set aside 5 to 10 minutes to finish this program. You can log in and save your work to return to later. 
   
   ${ collapse_template(help_example) }  
 
   Click on **{green words}** to learn what they mean. Some questions have a question mark in a circle ${ fa_icon("question-circle", color_css="#0DCAF0" ) } that also gives help.
+terms:
+  principal: |
+    The person that gave you power of attorney over them.
 ---
 template: help_example
 
@@ -135,7 +138,7 @@ id: principal name
 question: |
   What is the name of the principal?
 subquestion: |
-  The principal is the person for whom you are an agent for power of attorney.
+  The principal is the person that gave you power of attorney over them.
 fields:
   - First: principal.name.first
   - Middle: principal.name.middle
@@ -211,9 +214,9 @@ event: get_docs_screen
 question: |
   Download
 subquestion: |
-  Your forms are ready. View and download your forms below. Click **Make changes** to fix any mistakes.
+  Your forms are ready. View and download your forms below. You can print your forms from the View screen or after downloading them. Click **Make changes** to fix any mistakes.
   
-  Read the instructions to learn what to do next.
+  Read the instructions to learn what to do next. Do not sign your forms before they are notarized.
 
   Thank you for using ILAO Easy Forms!
   
@@ -225,7 +228,7 @@ subquestion: |
 
   ${ al_user_bundle.send_button_html(show_editable_checkbox=False) }
   
-  **Note:** This program does not send your form. You will need to do this yourself.
+  **Note:** This program does not e-file your form. You will need to do this yourself.
 
   Thank you for using ILAO Easy Forms!
 under: |
