@@ -66,7 +66,7 @@ code: |
   nav.set_section('section_user')
   set_progress(75)
   user.name.first
-  user.address.address
+  user.in_america
   nav.set_section('section_download')
   set_progress(100)
   get_docs_screen 
@@ -197,17 +197,43 @@ fields:
 ---
 id: your address
 question: |
-  What is your address?
+  Enter your address
+subquestion: |
+  ${collapse_template(intl_address_help)}
 fields:
+  - Do you have a United States address?: user.in_america
+    datatype: yesnoradio
+    default: True
+    help: |
+      Click **No** if you want to list an address outside the United States. You should enter the international address using the English alphabet.
   - Street address: user.address.address
     address autocomplete: True
+    show if: user.in_america
   - Address line 2: user.address.unit
     required: False
+    show if: user.in_america
   - City: user.address.city
+    show if: user.in_america
   - State: user.address.state
+    show if: user.in_america
     code: |
       states_list() 
   - ZIP code: user.address.zip
+    show if: user.in_america
+  - Non-US address line 1 (street address, apartment number): user.intl_address_1
+    show if: 
+      variable: user.in_america
+      is: False
+  - Non-US address line 2 (city, province or state, postal code, country): user.intl_address_2
+    show if: 
+      variable: user.in_america
+      is: False
+---
+template: intl_address_help
+subject: |
+  **What if I do not have a United States address?**
+content: |
+  For international addresses, there will be space for two lines to enter the address. You should enter the international address using the English alphabet.
 ---
 id: get docs screen
 event: get_docs_screen
@@ -314,10 +340,14 @@ review:
     button: |
       **Your name:**
       ${user.name.full(middle="full")}
-  - Edit: user.address.address
+  - Edit: user.in_america
     button: |
       **Your address:**
+      % if user.in_america == True:
       ${user.address.on_one_line(bare=True)}
+      % else:
+      ${user.intl_address_1}, ${user.intl_address_2}
+      % endif
 ---
 event: section_power
 question: |
@@ -378,7 +408,11 @@ review:
     button: |
       **Your name:**
       ${user.name.full(middle="full")}
-  - Edit: user.address.address
+  - Edit: user.in_america
     button: |
       **Your address:**
+      % if user.in_america == True:
       ${user.address.on_one_line(bare=True)}
+      % else:
+      ${user.intl_address_1}, ${user.intl_address_2}
+      % endif
