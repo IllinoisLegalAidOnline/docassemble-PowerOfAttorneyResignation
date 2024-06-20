@@ -40,6 +40,7 @@ mandatory: True
 code: |
   sees_nav_bar
   nav.set_section('section_intro')
+  snapshot_start
   set_progress(5)
   how_to_use
   accept_terms
@@ -69,7 +70,34 @@ code: |
   user.in_america
   nav.set_section('section_download')
   set_progress(100)
+  forms_assembling
+  snapshot_forms
   get_docs_screen 
+---
+code: |
+  stuff_to_snapshot = {
+  	'start_time': str(current_datetime().format_datetime()),
+  	'started_interview': True, 
+  	}
+    
+  stuff_to_snapshot['user_zip'] = showifdef('users[0].address.zip')
+
+  stuff_to_snapshot['downloaded_forms'] = showifdef('forms_assembling')
+  
+  stuff_to_snapshot['poa_type'] = showifdef('poa_type') 
+  
+  store_variables_snapshot(
+  	data=stuff_to_snapshot, persistent=True
+  	)
+  snapshot_interview_state = True
+---
+code: |
+  snapshot_interview_state
+  snapshot_start = True  
+---
+code: |
+  reconsider('snapshot_interview_state')
+  snapshot_forms = True
 ---
 id: welcome
 question: |
@@ -234,6 +262,17 @@ subject: |
   **What if I do not have a United States address?**
 content: |
   For international addresses, there will be space for two lines to enter the address. You should enter the international address using the English alphabet.
+---
+id: forms assembling
+continue button field: forms_assembling
+question: |
+  Almost done
+subquestion: |
+  After you click **Next**, it may take a few moments to finish making your forms.
+  
+  ###### You do not need to refresh your screen. Hang in there!
+  
+  [NEWLINE]
 ---
 id: get docs screen
 event: get_docs_screen
