@@ -366,7 +366,7 @@ review:
   - Edit: principal.name.first
     button: |
       **The principal's name:**
-      ${principal.name.full(middle="full")}
+      ${principal.name_full()}
   - Edit: poa_type
     button: |
       % if poa_type == "Health care":
@@ -401,7 +401,7 @@ review:
   - Edit: user.name.first
     button: |
       **Your name:**
-      ${user.name.full(middle="full")}
+      ${user.name_full()}
   - Edit: user.in_america
     button: |
       **Your address:**
@@ -420,7 +420,7 @@ review:
   - Edit: principal.name.first
     button: |
       **The principal's name:**
-      ${principal.name.full(middle="full")}
+      ${principal.name_full()}
   - Edit: poa_type
     button: |
       % if poa_type == "Health care":
@@ -469,7 +469,7 @@ review:
   - Edit: user.name.first
     button: |
       **Your name:**
-      ${user.name.full(middle="full")}
+      ${user.name_full()}
   - Edit: user.in_america
     button: |
       **Your address:**
