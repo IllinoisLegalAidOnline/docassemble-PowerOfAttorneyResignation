@@ -1,7 +1,7 @@
 metadata:
   title: Power of attorney agent resignation
   short title: POA resignation
-  comment: This program helps you complete the forms to resign as an agent for power of attorney.
+  comment: This Easy Form helps you complete the forms to resign as an agent for power of attorney.
   authors:
     - Vivian McNaughton
     - Matt Newsted
@@ -15,7 +15,6 @@ include:
 objects:
   - user: ALIndividual
   - principal: ALIndividual
-  - court_list: ALCourtLoader.using(file_name='docassemble.ILAO:data/sources/il_courts.xlsx')
 ---
 code: |
   ilao_easy_form_title = "Power of attorney resignation"
@@ -112,7 +111,7 @@ subquestion: |
 
   This program helps you complete the forms to resign as an agent for power of attorney.
   
-  To learn more, read ILAO’s article about [**resigning as a power of attorney**](https://www.illinoislegalaid.org/legal-information/ending-power-attorney-0).
+  To learn more, see ILAO’s article on [**revoking or ending a power of attorney**](https://www.illinoislegalaid.org/node/31866).
 field: sees_nav_bar
 ---
 id: instructions
